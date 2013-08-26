@@ -1,0 +1,28 @@
+Abstraction- a mental model that removes details
+[user]<->[interface]<->[code]
+
+Lowest level of abstraction is a gate level abstraction
+eg. AND/OR/XOR gate
+
+History of Computing
+-----
+Abacus- 1500 BC
+
+Blaise Pascal- Mechanical device to add, subtract, divide, & multiply, 1600s, (didn't actually do division)
+
+William Schickard- invented a calculating machine in 1623, gave it to Kepler, who kept it secret.  Rediscovered 300 years later.
+
+Gottfried Leibniz- invented a mechanical calculator in 1660-70 (actually did division)
+
+Joseph Jacquard- Jaquard's Loom, the punched card.  Loom that used punchcards to control the weaving pattern. Automated weaving.
+
+Charles Babbage- Analytical engine, a punchcard-driven calculator.
+
+Ada Byron- fixed Babbage's machine more or less, problem was that they couldn't make parts small enough for the original design, which was modified.  First programmer, credited with creating the loop.
+
+William Burroughs & Dr. Herman Hollerith- Late 1800s, US Gov't put out a bounty for a tabulating machine to help with the 1890 census.  Hollerith's was cheaper and had a memory module.  Hollerith went on tofound IBM.
+
+Alan Turing- Turing machine, AI testing.  British gov't forced him to join the war effort and help break ENIGMA.  While he was doing this, he was working on the Turing machine.  He basically designed a computer, but it couldn't be built until the 50s.
+
+Harvard Mark I (mechanical), ENIAC, UNIVAC I- Early computers launch new era in math, physics, engineering, and economics
+
