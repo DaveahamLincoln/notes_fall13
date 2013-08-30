@@ -1,0 +1,79 @@
+Primitive Data Types in Java
+
+byte 	8 bits, 1 bite
+short 	16 bits
+int 	32 bits
+long 	64 bits
+float 	32 bits
+double 	64 bits
+bool 	(t/f)
+char 	16 bits
+
+Reference Types in Java
+Byte, Short, Integer, Long, Float, Double, Boolean, Character
+String
+User-defined
+
+
+Arithmetic operators
++-*/%
+
+Arithmetic expression (informal and inexhaustible)
+A constant is expression
+A variable is an expression
+If P and Q are operations and (._.) is an operator, P (._.) Q is a binary operator, then (._.) is an expression too.
+
+Rounding up and down:
+7/3
+>2
+
+(7.0/3)+.5
+<(7.0/3.0)+.5
+<x=						((7.0/3.0)+.5)		.toInteger 
+>x 						//rounded up or down as the case may be.
+
+Bitwise and Shift Operators
+~, 	unary bitwise complement
+&, 	bitwise AND
+|, 	bitwise OR
+^, 	bitwise XOR
+<<, shift left
+>>, shift right
+
+a = 5	.toBinary
+	00000101
+
+b = 8	.toBinary
+	00001000
+
+a & b 
+>False.  At no point does a have a t where b has one.
+
+a>>2
+00000001
+
+(shift a over 2 blocks (add 0 to the front))
+
+Relational Operators
+== 	equal to
+!= 	not equal to
+> 	greater than
+>= 	greater than or equal to
+< 	less than
+<= 	less than or equal to
+
+Logical Operators
+&&	AND
+||	OR
+!	NOT
+
+Ternary Operator
+X?Y:Z
+
+Precedence
+*/%
++-
+< <= => >
+++ !+
+=
+
