@@ -1,0 +1,71 @@
+Control structures:
+
+Sequential statements:
+
+Selection statements:
+
+If
+
+if(condition){
+	statements
+}
+
+if(condition){
+	statements
+}
+else{
+	statements
+}
+
+-----
+
+Switch
+
+switch(expression){		#expression evaluates to integer
+	case C1:
+	statements
+	break;
+
+	case C2:
+	statements
+	break;
+
+	default:
+	statements
+}
+
+-----
+
+Repetition statements:
+
+While
+
+while(condition){
+	statements
+}
+
+-----
+
+Do while
+
+do{
+	statements
+} while(condition)		#does s, then checks condition, if T, does again
+
+-----
+
+For
+
+for(initialization; condition; increment){
+	statements
+}
+
+-----
+
+Break & continue:
+
+continue- 	skips current iteration		#during class meeting, continue, come back next class
+
+break- 		stops execution		#during class meeting, break, don't come back
+
+

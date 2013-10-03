@@ -1,0 +1,9 @@
+Source object (i.e. window) ---> Receiver Object[H_Func(Event){}]
+			^							|
+		    |							v
+			----------Registration-------
+
+
+Source/receiver is the whole window, 
+You can put sources inside of a reciever (child windows inside parent window)
+

@@ -1,0 +1,16 @@
+
+public class Rectangle {
+	protected int rectangleLength;
+	protected int rectangleHeight;
+
+	
+	public Rectangle(int length, int height){
+		rectangleLength = length;
+		rectangleHeight = height;
+	}
+	
+	public int getArea() {
+		return rectangleLength * rectangleHeight;
+	}
+
+}

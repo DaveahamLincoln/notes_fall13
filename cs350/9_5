@@ -1,0 +1,5 @@
+Math Functions
+
+*There is a class called java.lang.math
+*Double radian = Math.PI/180.0
+*double y = Math.sin(deg*radian)

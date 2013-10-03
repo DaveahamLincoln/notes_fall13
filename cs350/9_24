@@ -1,0 +1,7 @@
+Use a 3x3 matrix to store dot values.
+
+int[][][] spot_matrix = {
+	{{0,0,0},{0,0,0},{0,0,0}}, //blank
+	{{0,0,0},{0,1,0},{0,0,0}}, //1
+	//etc
+}

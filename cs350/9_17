@@ -1,0 +1,38 @@
+Arrays- fixed size
+	1d
+	2d-nd
+
+Collections-
+	ArrayList
+	LinkedList
+
+1d Array:
+	int[]= new int[12];
+	int[] a = {
+		1,2,3,4,5,6,
+		7,8,9,10,11,12
+	};
+
+2d/nd Array:
+	int[][] b = new int[4][3];
+	int[][] b = {
+		{1,2,3},
+		{4,5,6},
+		{7,8,9},
+		{0,1,2}
+	};
+
+ArrayList(java.util package)
+	ArrayList<String> list1=new ArrayList<String>();
+
+	Methods: size, get, add(with/without index), remove, clear
+
+LinkedList(java.util package)
+	LinkedList<String> list1 = new LinkedList<String>()
+	List<String> list2 = new LinkedList<String>;
+
+	Interface:List(search interface list in java)
+
+	Iterator: ListIterator<String> itr=list2.listIterator();
+
+	itr.hasNext(), itr.next(), itr.hasPrevious(), itr.previous()

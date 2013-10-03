@@ -1,0 +1,40 @@
+Overriding requires function to have the same name, return type, and 
+	number of parameters as the function being overriden.
+
+Overloading ex. 
+
+function() {
+	
+}
+
+function(param) {
+	
+}
+
+this.n refers to data member n (i.e. Class A has n, Class B extends A.  
+	this.n refers to Class A's n.)
+
+Protected fields can be accessed by all members of the same package.  (???)
+
+Each file in java can only have one public class (has the same name as the file).
+
+Constructor overloading-
+	public class employee {
+
+		public employee(String first, String last, String ssn){
+			firstName = first;
+      		lastName = last;
+      		socialSecurityNumber = ssn;
+		}
+
+		//Overloaded constructor.
+		public employee(String first, String last){
+			firstName = first;
+      		lastName = last;
+      		socialSecurityNumber = "000-00-0000";
+		}
+
+
+	}
+
+}
