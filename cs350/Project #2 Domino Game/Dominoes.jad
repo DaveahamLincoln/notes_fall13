@@ -1,0 +1,255 @@
+// Decompiled by Jad v1.5.8e. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.geocities.com/kpdus/jad.html
+// Decompiler options: packimports(3) 
+// Source File Name:   Dominoes.java
+
+import java.awt.*;
+import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.Random;
+import javax.swing.JApplet;
+import javax.swing.JFrame;
+
+public class Dominoes extends JApplet
+    implements KeyListener, MouseListener, MouseMotionListener
+{
+
+    public Dominoes()
+    {
+        isInitialized = false;
+        setFocusable(true);
+        addKeyListener(this);
+        addMouseListener(this);
+        addMouseMotionListener(this);
+    }
+
+    private void setInitState()
+    {
+        int width = 30;
+        int gap = 40;
+        int start_y = 20;
+        int start_x = (getSize().width - 7 * width - 6 * gap) / 2;
+        topY = 2 * start_y + 2 * width;
+        bottomY = getSize().height - topY;
+        ArrayList whole_set = new ArrayList();
+        for(int i = 0; i <= 6; i++)
+        {
+            for(int j = i; j <= 6; j++)
+                whole_set.add(new CDomino(0, 0, 30, i, j));
+
+        }
+
+        Random diceRoller = new Random();
+        player1 = new ArrayList();
+        for(int i = 0; i < 7; i++)
+        {
+            int index = diceRoller.nextInt(whole_set.size());
+            CDomino p = (CDomino)whole_set.get(index);
+            whole_set.remove(index);
+            player1.add(p);
+            p.translate(start_x + i * (width + gap), start_y);
+        }
+
+        player2 = new ArrayList();
+        for(int i = 0; i < 7; i++)
+        {
+            int index = diceRoller.nextInt(whole_set.size());
+            CDomino p = (CDomino)whole_set.get(index);
+            whole_set.remove(index);
+            player2.add(p);
+            p.translate(start_x + i * (width + gap), bottomY + start_y);
+        }
+
+        table = new ArrayList();
+        DominoToBeMoved = null;
+    }
+
+    public void paint(Graphics g)
+    {
+        if(!isInitialized)
+        {
+            isInitialized = true;
+            setInitState();
+        }
+        Image backBuffer = createImage(getSize().width, getSize().height);
+        Graphics gBackBuffer = backBuffer.getGraphics();
+        gBackBuffer.setColor(Color.white);
+        gBackBuffer.clearRect(0, 0, getSize().width, getSize().height);
+        for(int i = 0; i < player1.size(); i++)
+            ((CDomino)player1.get(i)).draw(gBackBuffer);
+
+        for(int i = 0; i < player2.size(); i++)
+            ((CDomino)player2.get(i)).draw(gBackBuffer);
+
+        for(int i = 0; i < table.size(); i++)
+            ((CDomino)table.get(i)).draw(gBackBuffer);
+
+        gBackBuffer.setColor(Color.blue);
+        gBackBuffer.drawLine(0, topY, getSize().width, topY);
+        gBackBuffer.drawLine(0, bottomY, getSize().width, bottomY);
+        g.drawImage(backBuffer, 0, 0, null);
+    }
+
+    public void keyPressed(KeyEvent keyevent)
+    {
+    }
+
+    public void keyReleased(KeyEvent e)
+    {
+        if(e.getKeyCode() == 82)
+        {
+            setInitState();
+            repaint();
+        }
+    }
+
+    public void keyTyped(KeyEvent keyevent)
+    {
+    }
+
+    public void mouseClicked(MouseEvent e)
+    {
+        if(!e.isMetaDown())
+            return;
+        for(int i = table.size() - 1; i >= 0; i--)
+        {
+            CDomino p = (CDomino)table.get(i);
+            if(p.isInside(e.getX(), e.getY()))
+            {
+                p.rotate(p.getCneterX(), p.getCneterY());
+                table.remove(i);
+                table.add(p);
+                repaint();
+                return;
+            }
+        }
+
+        for(int i = player1.size() - 1; i >= 0; i--)
+        {
+            CDomino p = (CDomino)player1.get(i);
+            if(p.isInside(e.getX(), e.getY()))
+            {
+                player1.remove(i);
+                player1.add(p);
+                p.rotate(p.getCneterX(), p.getCneterY());
+                repaint();
+                return;
+            }
+        }
+
+        for(int i = player2.size() - 1; i >= 0; i--)
+        {
+            CDomino p = (CDomino)player2.get(i);
+            if(p.isInside(e.getX(), e.getY()))
+            {
+                player2.remove(i);
+                player2.add(p);
+                p.rotate(p.getCneterX(), p.getCneterY());
+                repaint();
+                return;
+            }
+        }
+
+    }
+
+    public void mousePressed(MouseEvent e)
+    {
+        if(e.isMetaDown())
+            return;
+        for(int i = table.size() - 1; i >= 0; i--)
+        {
+            CDomino p = (CDomino)table.get(i);
+            if(p.isInside(e.getX(), e.getY()))
+            {
+                table.remove(i);
+                table.add(p);
+                DominoToBeMoved = p;
+                m_nOldX = e.getX();
+                m_nOldY = e.getY();
+                repaint();
+                return;
+            }
+        }
+
+        for(int i = player1.size() - 1; i >= 0; i--)
+        {
+            CDomino p = (CDomino)player1.get(i);
+            if(p.isInside(e.getX(), e.getY()))
+            {
+                player1.remove(i);
+                table.add(p);
+                DominoToBeMoved = p;
+                m_nOldX = e.getX();
+                m_nOldY = e.getY();
+                repaint();
+                return;
+            }
+        }
+
+        for(int i = player2.size() - 1; i >= 0; i--)
+        {
+            CDomino p = (CDomino)player2.get(i);
+            if(p.isInside(e.getX(), e.getY()))
+            {
+                player2.remove(i);
+                table.add(p);
+                DominoToBeMoved = p;
+                m_nOldX = e.getX();
+                m_nOldY = e.getY();
+                repaint();
+                return;
+            }
+        }
+
+    }
+
+    public void mouseReleased(MouseEvent e)
+    {
+        DominoToBeMoved = null;
+    }
+
+    public void mouseEntered(MouseEvent mouseevent)
+    {
+    }
+
+    public void mouseExited(MouseEvent mouseevent)
+    {
+    }
+
+    public void mouseMoved(MouseEvent mouseevent)
+    {
+    }
+
+    public void mouseDragged(MouseEvent e)
+    {
+        if(e.isMetaDown())
+            return;
+        if(DominoToBeMoved != null)
+        {
+            DominoToBeMoved.translate(e.getX() - m_nOldX, e.getY() - m_nOldY);
+            m_nOldX = e.getX();
+            m_nOldY = e.getY();
+            repaint();
+        }
+    }
+
+    public static void main(String args[])
+    {
+        JFrame application = new JFrame("Dominoes");
+        Dominoes dominoesPanel = new Dominoes();
+        application.add(dominoesPanel);
+        application.setDefaultCloseOperation(3);
+        application.setSize(600, 600);
+        application.setVisible(true);
+    }
+
+    private ArrayList player1;
+    private ArrayList player2;
+    private ArrayList table;
+    private CDomino DominoToBeMoved;
+    private int m_nOldX;
+    private int m_nOldY;
+    private int topY;
+    private int bottomY;
+    boolean isInitialized;
+}

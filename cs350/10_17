@@ -1,0 +1,1722 @@
+A. Classes
+	-data members
+	-encapsulation
+	-hiding data
+	-inheritance
+
+B. Event Handling
+	-define
+	-register
+	-call
+
+C. GUI Components
+	-know how to create different specific elements (parameters and stuff)
+
+
+Two in-class exercises
+
+A. Control Structures
+	-break
+	-continue
+	-switch
+		case 1
+		case 2		//1 => case 1 & 2
+			break
+
+		case 1		// 1 => case 1
+			break
+		case 2		// 2 => case 2
+			break
+
+B. Private, Protected, and Public
+
+3 Projects
+A. Control structures
+B. Event Handling & Classes
+C. UI & Class
+
+1. Trace control structures (in class exercise)
+2. Write control structure related code (Project 1)
+	-nested loop 
+3. Private, protected, and public (in class exercise)
+	-understand the difference
+4. Write a simple class (Projects 2 & 3)
+	-constructure + data member + control structure
+5. Concepts about Event Handling (Project 2)
+6. Concepts about GUI components (Project 3)
+7. Open books & notes (no computer- you have to print stuff out)
+
+CDomino {
+	int topdots;
+	int botdots;
+	int x;
+	int y;
+	int w;
+	int rotation;
+	
+}
+
+
+--------------------------------------------
+---------TRACING CONTROL STRUCTURES---------
+--------------------------------------------
+
+Control structures:
+
+Sequential statements:
+
+Selection statements:
+
+If
+
+if(condition){
+	statements
+}
+
+if(condition){
+	statements
+}
+else{
+	statements
+}
+
+-----
+
+Switch
+
+switch(expression){		#expression evaluates to integer
+	case C1:
+	statements
+	break;
+
+	case C2:
+	statements
+	break;
+
+	default:
+	statements
+}
+
+-----
+
+Repetition statements:
+
+While
+
+while(condition){
+	statements
+}
+
+-----
+
+Do while
+
+do{
+	statements
+} while(condition)		#does s, then checks condition, if T, does again
+
+-----
+
+For
+
+for(initialization; condition; increment){
+	statements
+}
+
+-----
+
+Break & continue:
+
+continue- 	skips current iteration		#during class meeting, continue, come back next class
+
+break- 		stops execution		#during class meeting, break, don't come back
+
+
+--------------------------------------------
+---------WRITING CONTROL STRUCTURES---------
+--------------------------------------------
+
+// Fig. 5.26: Shapes.java
+// Demonstrates drawing different shapes.
+import java.awt.*;
+import javax.swing.JPanel;
+
+public class Tesselator extends JPanel  //Shapes inherits from Jpanel
+{
+   private int choice; // user's choice of which shape to draw
+   private int pixels; //user's choice of pixels
+   
+   // constructor sets the user's choice
+   public Tesselator ( int userPolyType, int userPixels )
+   {
+      choice = userPolyType;
+      pixels = userPixels;
+   } // end Tesselator constructor
+   
+   // draws a cascade of shapes starting from the top-left corner
+   public void paintComponent( Graphics g )  //binds Graphics to g, sort of a reference thing.
+   {
+      super.paintComponent( g );
+      
+         // pick the shape based on the user's choice
+      switch ( choice ){
+      
+            case 3: // draw triangles
+            	int triangleHeight=(int) (Math.sqrt(3)*pixels);
+                for ( int x = 0; x < 300; x=x+pixels ){
+                	
+                	for (int y = 0; y <300;y=y+triangleHeight) {
+                		g.setColor(Color.red);
+                		g.drawLine(x, y, 300, y);	//Horizontal
+                		g.drawLine(x,y+triangleHeight/2,300,y+triangleHeight/2);	//RTL
+                		g.drawLine(x, y, x+2*pixels,y+2*triangleHeight );	//LTR
+                		g.drawLine(x+pixels, y, x, y+triangleHeight);
+                		
+                	}
+            	}
+            break;
+            
+            case 4: // draw rectangles
+                for ( int x = 0; x < 300/pixels; x++ ){
+                	
+                	for (int y = 0; y <300/pixels;y++){
+                		g.setColor(Color.blue);
+                		g.drawRect( x*pixels, y*pixels, pixels, pixels ); //drawRect(x,y,w,h)
+                	}
+            	}
+            break;
+
+            case 6: // !!!draw hexagons!!!
+            	g.setColor(Color.green);
+            	int hexTriHeight=(int) (Math.sqrt(3)*pixels)/2;
+                for (int y = 0; y <300;y=y+3*pixels) {
+                		for ( int x = 0; x < 300; x=x+2*hexTriHeight ){
+                			g.drawLine(x, y, x+hexTriHeight, y+pixels/2);	
+                			g.drawLine(x+hexTriHeight,y+pixels/2,x+2*hexTriHeight,y);	
+                			g.drawLine(x+hexTriHeight, y+pixels/2, x+hexTriHeight,y+pixels);
+                			g.drawLine(x+hexTriHeight,y+pixels,x+hexTriHeight,y+pixels+pixels/2);
+                			g.drawLine(x,y+pixels*2,x+hexTriHeight,y+pixels+pixels/2);//lower hex ne
+                			g.drawLine(x+hexTriHeight,y+pixels+pixels/2, x+2*hexTriHeight, y+2*pixels);
+                			g.drawLine(x, y+pixels*2, x, y+pixels*3);//Lower hex vert
+                			g.drawLine(x, y+pixels*2, x-hexTriHeight, y+pixels+pixels/2);
+                		}
+                	}
+                }
+      		}
+      
+} // end method paintComponent
+
+
+------------------------------------------------
+---------PRIVATE VS PROTECTED VS PUBLIC---------
+------------------------------------------------
+
+Modifier    | Class | Package | Subclass | World
+————————————+———————+—————————+——————————+———————
+public      |  ✔    |    ✔    |    ✔     |   ✔
+————————————+———————+—————————+——————————+———————
+protected   |  ✔    |    ✔    |    ✔     |   ✘
+————————————+———————+—————————+——————————+———————
+no modifier |  ✔    |    ✔    |    ✘     |   ✘
+————————————+———————+—————————+——————————+———————
+private     |  ✔    |    ✘    |    ✘     |   ✘
+
+Private
+
+Like you'd think, only the class in which it is declared can see it.
+
+Package Private
+
+Can only be seen and used by the package in which it was declared. This is the default in Java (which some see as a mistake).
+
+Protected
+
+Package Private + can be seen by subclasses or package member.
+
+Public
+
+Everyone can see it.
+
+
+------------------------------------------------
+---------PROJECTS 2&3---------------------------
+------------------------------------------------
+
+***********
+*PROJECT 2*
+***********
+
+ //CS350, Project #2, 
+ //Dave Nearing
+ //Dominoes class (Domino board and actions) in a Domino game.
+
+import java.awt.*;
+import java.awt.event.*;
+import java.util.ArrayList;
+import javax.swing.JApplet;
+import javax.swing.JFrame;
+
+import java.util.Random;  //for drawing tiles
+
+public class Dominoes extends JApplet
+    implements KeyListener, MouseListener, MouseMotionListener
+{
+	
+    private int player1Line;
+    private int player2Line;
+    private ArrayList top;
+    private ArrayList bot;
+    private ArrayList table;
+    private int startX;
+    private int startY;
+    private CDomino target;
+    boolean isInitialized;
+
+    public Dominoes()
+    {
+        isInitialized = false;
+        setFocusable(true);
+        addKeyListener(this);
+        addMouseListener(this);
+        addMouseMotionListener(this);
+    }
+
+    private void setInitState()
+    {
+        int width = 40;
+        int spacing = 20;
+        int start_y = 20;
+        int start_x = 10;
+        player1Line = 100;
+        player2Line = getSize().height - player1Line;
+        ArrayList whole_set = new ArrayList();
+        for(int i = 0; i <= 6; i++)
+        {
+            for(int j = i; j <= 6; j++)
+                whole_set.add(new CDomino(0, 0, 30, i, j));
+
+        }
+
+        Random drawTiles = new Random();
+        top = new ArrayList();
+        for(int i = 0; i < 7; i++)
+        {
+            int index = drawTiles.nextInt(whole_set.size());
+            CDomino p = (CDomino)whole_set.get(index);
+            whole_set.remove(index);
+            top.add(p);
+            p.drag(start_x + i * (width + spacing), start_y);
+        }
+
+        bot = new ArrayList();
+        for(int i = 0; i < 7; i++)
+        {
+            int index = drawTiles.nextInt(whole_set.size());
+            CDomino p = (CDomino)whole_set.get(index);
+            whole_set.remove(index);
+            bot.add(p);
+            p.drag(start_x + i * (width + spacing), player2Line + start_y);
+        }
+
+        table = new ArrayList();
+        target = null;
+    }
+
+    public void paint(Graphics g)
+    {
+        if(!isInitialized)
+        {
+            isInitialized = true;
+            setInitState();
+        }
+        Image backBuffer = createImage(getSize().width, getSize().height);
+        Graphics gBackBuffer = backBuffer.getGraphics();
+        gBackBuffer.setColor(Color.white);
+        gBackBuffer.clearRect(0, 0, getSize().width, getSize().height);
+        for(int i = 0; i < top.size(); i++)
+            ((CDomino)top.get(i)).draw(gBackBuffer);
+
+        for(int i = 0; i < bot.size(); i++)
+            ((CDomino)bot.get(i)).draw(gBackBuffer);
+
+        for(int i = 0; i < table.size(); i++)
+            ((CDomino)table.get(i)).draw(gBackBuffer);
+
+        gBackBuffer.setColor(Color.blue);
+        gBackBuffer.drawLine(0, player1Line, getSize().width, player1Line);
+        gBackBuffer.drawLine(0, player2Line, getSize().width, player2Line);
+        g.drawImage(backBuffer, 0, 0, null);
+    }
+
+    public void keyPressed(KeyEvent keyevent)
+    {
+    }
+
+    public void keyReleased(KeyEvent e)
+    {
+        if(e.getKeyCode() == 82)
+        {
+            setInitState();
+            repaint();
+        }
+    }
+
+    public void keyTyped(KeyEvent keyevent)
+    {
+    }
+
+    public void mouseClicked(MouseEvent e)
+    {
+        if(!e.isMetaDown())
+            return;
+        for(int i = table.size() - 1; i >= 0; i--)
+        {
+            CDomino p = (CDomino)table.get(i);
+            if(p.isInside(e.getX(), e.getY()))
+            {
+                p.rotate(p.getCenterTall(), p.getCenterLong());
+                table.remove(i);
+                table.add(p);
+                repaint();
+                return;
+            }
+        }
+
+        for(int i = top.size() - 1; i >= 0; i--)
+        {
+            CDomino p = (CDomino)top.get(i);
+            if(p.isInside(e.getX(), e.getY()))
+            {
+                top.remove(i);
+                top.add(p);
+                p.rotate(p.getCenterTall(), p.getCenterLong());
+                repaint();
+                return;
+            }
+        }
+
+        for(int i = bot.size() - 1; i >= 0; i--)
+        {
+            CDomino p = (CDomino)bot.get(i);
+            if(p.isInside(e.getX(), e.getY()))
+            {
+                bot.remove(i);
+                bot.add(p);
+                p.rotate(p.getCenterTall(), p.getCenterLong());
+                repaint();
+                return;
+            }
+        }
+
+    }
+
+    public void mousePressed(MouseEvent e)
+    {
+        if(e.isMetaDown())
+            return;
+        for(int i = table.size() - 1; i >= 0; i--)
+        {
+            CDomino p = (CDomino)table.get(i);
+            if(p.isInside(e.getX(), e.getY()))
+            {
+            	startX = e.getX();
+                startY = e.getY();
+                table.remove(i);
+                table.add(p);
+                target = p;
+                repaint();
+                return;
+            }
+        }
+
+        for(int i = top.size() - 1; i >= 0; i--)
+        {
+            CDomino p = (CDomino)top.get(i);
+            if(p.isInside(e.getX(), e.getY()))
+            {
+            	startX = e.getX();
+                startY = e.getY();
+                top.remove(i);
+                table.add(p);
+                target = p;
+                repaint();
+                return;
+            }
+        }
+
+        for(int i = bot.size() - 1; i >= 0; i--)
+        {
+            CDomino p = (CDomino)bot.get(i);
+            if(p.isInside(e.getX(), e.getY()))
+            {
+                bot.remove(i);
+                table.add(p);
+                target = p;
+                startX = e.getX();
+                startY = e.getY();
+                repaint();
+                return;
+            }
+        }
+
+    }
+
+    public void mouseReleased(MouseEvent e)
+    {
+        target = null;
+    }
+
+    public void mouseEntered(MouseEvent mouseevent)
+    {
+    }
+
+    public void mouseExited(MouseEvent mouseevent)
+    {
+    }
+
+    public void mouseMoved(MouseEvent mouseevent)
+    {
+    }
+
+    public void mouseDragged(MouseEvent e)
+    {
+        if(e.isMetaDown())
+            return;
+        if(target != null)
+        {
+            target.drag(e.getX() - startX, e.getY() - startY);
+            startX = e.getX();
+            startY = e.getY();
+            repaint();
+        }
+    }
+
+    public static void main(String args[])
+    {
+        JFrame application = new JFrame("Dominoes");
+        Dominoes dominoesPanel = new Dominoes();
+        application.add(dominoesPanel);
+        application.setDefaultCloseOperation(3);
+        application.setSize(1024, 7680);
+        application.setVisible(true);
+    }
+
+}
+
+****************************************************************
+
+ //CS350, Project #2, 
+ //Dave Nearing
+ //CDomino class for individual Dominos in a Domino game.
+
+import java.awt.Color;
+import java.awt.Graphics;
+
+public class CDomino
+{
+    private int cornerX;
+    private int cornerY;
+    private int xWide;
+    private int yWide;
+    private int offset;
+    private int dots;
+    private double[] Xs;
+    private double[] Ys;
+	private int rotIndex;
+
+    public CDomino(int x, int y, int w, int numSpots1, int numSpots2)
+    {
+        int spotMatrix[][][] = {
+            {new int[3], new int[3], new int[3]}, //blank 
+            {new int[3], {0, 1, 0},  new int[3]}, //1
+            {{1, 0, 0},  new int[3], {0, 0, 1} }, //2
+            {{1, 0, 0},  {0, 1, 0},  {0, 0, 1} }, //3
+            {{1, 0, 1},  new int[3], {1, 0, 1} }, //4
+            {{1, 0, 1},  {0, 1, 0},  {1, 0, 1} }, //5
+            {{1, 0, 1},  {1, 0, 1},  {1, 0, 1} }  //6
+        };
+        offset = 3;
+        
+        cornerX = x;
+        cornerY= y;
+        xWide = x + w;
+        yWide = y + 2 * w;
+        dots = numSpots1 + numSpots2;
+        Xs = new double[dots];
+        Ys = new double[dots];
+        rotIndex=0;
+
+        int index = 0;  //keeps track of which (X,Y) dot slot you're filling in.
+        int border = 4; //size of the border around the dots
+        int change = (w - 2 * border) / 2;
+        for(int i = 0; i < 3; i++)
+        {
+            for(int j = 0; j < 3; j++)
+                if(spotMatrix[numSpots1][i][j] == 1)
+                {
+                    Xs[index] = x + border + j * change;
+                    Ys[index] = y + border + i * change;
+                    index++;
+                }
+
+        }
+
+        for(int i = 0; i < 3; i++)
+        {
+            for(int j = 0; j < 3; j++)
+                if(spotMatrix[numSpots2][i][j] == 1)
+                {
+                    Xs[index] = x + border + j * change;
+                    Ys[index] = y + w + border + i * change;
+                    index++;
+                }
+
+        }
+
+    }
+
+    public int getCenterTall()
+    {
+        return (cornerX + xWide) / 2;
+    }
+
+    public int getCenterLong()
+    {
+        return (cornerY + yWide) / 2;
+    }
+
+    public boolean isInside(int x, int y)
+    {
+        return x >= cornerX && x < xWide && y >= cornerY && y < yWide;
+    }
+
+    public void drag(int dx, int dy)
+    {
+        cornerX += dx;
+        cornerY += dy;
+        xWide += dx;
+        yWide += dy;
+        for(int i = 0; i < (int)dots; i++)
+        {
+            Xs[i] += dx;
+            Ys[i] += dy;
+        }
+
+    }
+
+    public void rotate(int newX, int newY)
+    {
+        double swap = newX + (cornerY - newY);
+        cornerY = newY - (cornerX - newX);
+        cornerX = (int) swap;
+        double swapWide = newX + (yWide - newY);
+        yWide = newY - (xWide - newX);
+        xWide = (int) swapWide;
+        switch(rotIndex%2){
+        //I don't know why this doesn't work.
+        	case(0):
+        		int vs1 = cornerY;
+        		cornerY = yWide;
+        		yWide = vs1;
+        		rotIndex++;
+        		break;
+        	case(1):
+        		rotIndex++;
+        		break;
+        		}
+        
+        for(int i = 0; i < dots; i++)
+        {
+            swapWide = newX + (Ys[i] - newY);
+            Ys[i] = newY - (Xs[i] - newX);
+            Xs[i] = swapWide;
+        }
+
+    }
+
+
+    public void draw(Graphics g)
+    {
+        g.setColor(Color.gray);
+        g.fillRect(cornerX, cornerY, xWide - cornerX, yWide - cornerY);
+        g.setColor(Color.red);
+        for(int i = 0; i < dots; i++)
+            g.fillOval((int)Xs[i] - offset, (int)Ys[i] - offset, 5, 5);
+
+        if(yWide - cornerY > xWide - cornerX)
+            g.drawLine(cornerX, (cornerY + yWide)/2, xWide, (cornerY + yWide)/2); //middle line tall
+        else
+            g.drawLine((cornerX + xWide) / 2, cornerY, (cornerX + xWide) / 2, yWide); //middle line wide
+        g.setColor(Color.blue);
+        g.drawRect(cornerX, cornerY, xWide - cornerX, yWide - cornerY);
+    }
+
+}
+
+****************************************************************
+
+***********
+*PROJECT 3*
+***********
+
+/*
+ *CS350
+ *Dave Nearing
+ *Tool for generating unique ids for surveys.
+ */
+
+package csampler;
+
+/**
+ *
+ * @author danearing
+ */
+public class idGenerator {
+    private int pKeyCounter;
+    public String pKeyPut;
+    
+    public idGenerator() {
+        pKeyCounter = 1;
+    }
+    
+    public String generateId() {
+        pKeyPut = Integer.toString(pKeyCounter);
+        pKeyCounter = pKeyCounter + 1;
+        return pKeyPut;
+    }
+
+    void decrementID() {
+        pKeyCounter = pKeyCounter - 1;
+    }
+}
+
+****************************************************************
+
+/*
+ *CS350
+ *Dave Nearing
+ *Model for individual surveys.
+ */
+
+package csampler;
+
+/**
+ *
+ * @author danearing
+ */
+public class CSample {
+
+    /**
+     * @param args the command line arguments
+     */
+    private String id;
+    private String zip;
+    private boolean isFederal;
+    private boolean isState;
+    private boolean isPrivate;
+    private boolean isSelf;
+    private boolean isUnemployed;
+    private boolean impYes;
+    private boolean impNo;
+    private boolean impUnknown;
+    private boolean blameR;
+    private boolean blameD;
+    private boolean blameO;
+    private boolean blameC;
+
+    public CSample(String id, String zip, boolean isFederal, boolean isState, boolean isPrivate, boolean isSelf, 
+            boolean isUnemployed, boolean impYes, boolean impNo, boolean impUnknown, boolean blameR, boolean blameD, 
+            boolean blameO, boolean blameC) {
+        this.id = id;
+        this.zip = zip;
+        this.isFederal = isFederal;
+        this.isState = isState;
+        this.isPrivate = isPrivate;
+        this.isSelf = isSelf;
+        this.isUnemployed = isUnemployed;
+        this.impYes = impYes;
+        this.impNo = impNo;
+        this.impUnknown = impUnknown;
+        this.blameR = blameR;
+        this.blameD = blameD;
+        this.blameO = blameO;
+        this.blameC = blameC;
+    }
+    
+    public String getEmployment(){
+        String employment = null;
+        if (this.isFederal){
+            employment = "Federal";
+        }
+        if (this.isState){
+            employment = "State/Local";
+        }
+        if (this.isPrivate){
+            employment = "Private";
+        }
+        if (this.isSelf){
+            employment = "Self-Employed";
+        }
+        if (this.isUnemployed){
+            employment = "Unemployed";
+        }
+        return employment;
+    }
+    
+    public String getImpact(){
+        String impact = null;
+        if (this.impNo){
+            impact = "No";
+        }
+        if (this.impYes){
+            impact = "Yes";
+        }
+        if (this.impUnknown){
+            impact = "Unknown";
+        }
+        return impact;
+    }
+    
+    public String getBlame(){
+        //build
+        String blameString = null;
+        String R = null;
+        String D = null;
+        String O = null;
+        String C = null;
+        if (this.blameR){
+            R = "R";
+        } else {
+            R = "-";
+        }
+        if (this.blameD){
+            D = "D";
+        } else {
+            D = "-";
+        }
+        if (this.blameO){
+            O = "O";
+        } else {
+            O = "-";
+        }
+        if (this.blameC){
+            C = "C";
+        } else {
+            C = "-";
+        }
+        blameString = R+D+O+C;
+        return blameString;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getZip() {
+        return zip;
+    }
+
+    public Boolean isIsFederal() {
+        return isFederal;
+    }
+
+    public Boolean isIsState() {
+        return isState;
+    }
+
+    public Boolean isIsPrivate() {
+        return isPrivate;
+    }
+
+    public Boolean isIsSelf() {
+        return isSelf;
+    }
+
+    public Boolean isIsUnemployed() {
+        return isUnemployed;
+    }
+
+    public Boolean isImpYes() {
+        return impYes;
+    }
+
+    public Boolean isImpNo() {
+        return impNo;
+    }
+
+    public Boolean isImpUnknown() {
+        return impUnknown;
+    }
+
+    public Boolean isBlameR() {
+        return blameR;
+    }
+
+    public Boolean isBlameD() {
+        return blameD;
+    }
+
+    public Boolean isBlameO() {
+        return blameO;
+    }
+
+    public Boolean isBlameC() {
+        return blameC;
+    }
+    
+    
+    
+    public String getString() {
+        String surveyString;
+        surveyString = (this.id + "                            " + this.zip + "            " + this.getEmployment() + 
+                "             " + this.getImpact() + "                        " + this.getBlame());
+        return surveyString;
+    }
+    
+     public int getID() {
+        return Integer.parseInt(id);
+    }
+     
+}
+
+****************************************************************
+
+/*
+ *CS350
+ *Dave Nearing
+ *Form for collecting survey data.
+ */
+
+package csampler;
+
+/**
+ *
+ * @author danearing
+ */
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+import csampler.CSample;
+import java.awt.List;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.HashMap;
+import javax.swing.AbstractButton;
+import javax.swing.AbstractListModel;
+import javax.swing.DefaultListModel;
+import javax.swing.JDialog;
+import javax.swing.JList;
+import static javax.swing.JOptionPane.showInputDialog;
+import javax.swing.ListModel;
+
+/**
+ *
+ * @author danearing
+ */
+public class CSampler extends javax.swing.JFrame {
+    private HashMap<Integer, CSample> surveyObjectsBuffer;
+
+    /**
+     * Creates new form CSample
+     */
+    public CSampler() {
+        surveyList = new DefaultListModel();
+        surveyObjects = new HashMap<>();
+        initComponents();
+        keyGen = new idGenerator();
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+                          
+    private void initComponents() {
+
+        AddASurvey = new javax.swing.JDialog();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        isFed = new javax.swing.JRadioButton();
+        isState = new javax.swing.JRadioButton();
+        isPrivate = new javax.swing.JRadioButton();
+        isSelf = new javax.swing.JRadioButton();
+        isUnemployed = new javax.swing.JRadioButton();
+        jLabel9 = new javax.swing.JLabel();
+        affectYes = new javax.swing.JRadioButton();
+        affectNo = new javax.swing.JRadioButton();
+        affectUnknown = new javax.swing.JRadioButton();
+        jLabel10 = new javax.swing.JLabel();
+        submitAddASurvey = new javax.swing.JButton();
+        cancelAddASurvey = new javax.swing.JButton();
+        zipCode = new javax.swing.JTextField();
+        blameR = new javax.swing.JCheckBox();
+        blameD = new javax.swing.JCheckBox();
+        blameO = new javax.swing.JCheckBox();
+        blameC = new javax.swing.JCheckBox();
+        participantNo = new javax.swing.JTextField();
+        employmentType = new javax.swing.ButtonGroup();
+        affectType = new javax.swing.ButtonGroup();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        addASurvey = new javax.swing.JButton();
+        modifyASurvey = new javax.swing.JButton();
+        removeASurvey = new javax.swing.JButton();
+        removeAllSurveys = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        surveyListOut = new javax.swing.JList();
+
+        AddASurvey.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        AddASurvey.setTitle("Add A Survey");
+        AddASurvey.setMinimumSize(new java.awt.Dimension(552, 250));
+        AddASurvey.setPreferredSize(new java.awt.Dimension(552, 250));
+
+        jLabel6.setText("Participant No.");
+
+        jLabel7.setText("Zip Code");
+
+        jLabel8.setText("Employment Type");
+
+        employmentType.add(isFed);
+        isFed.setText("Federal");
+
+        employmentType.add(isState);
+        isState.setText("State/Local");
+
+        employmentType.add(isPrivate);
+        isPrivate.setText("Private");
+
+        employmentType.add(isSelf);
+        isSelf.setText("Self-Employed");
+
+        employmentType.add(isUnemployed);
+        isUnemployed.setText("Unemployed");
+
+        jLabel9.setText("Does the government shutown affect you?");
+
+        affectType.add(affectYes);
+        affectYes.setText("Yes");
+
+        affectType.add(affectNo);
+        affectNo.setText("No");
+
+        affectType.add(affectUnknown);
+        affectUnknown.setText("Unknown");
+
+        jLabel10.setText("Who/what is to blame for the government shutdown?");
+
+        submitAddASurvey.setText("Submit");
+        submitAddASurvey.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitAddASurveyActionPerformed(evt);
+            }
+        });
+
+        cancelAddASurvey.setText("Cancel");
+        cancelAddASurvey.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelAddASurveyActionPerformed(evt);
+            }
+        });
+
+        blameR.setText("Republicans(R)");
+
+        blameD.setText("Democrats(D)");
+
+        blameO.setText("Obamacare(O)");
+
+        blameC.setText("The Debt Ceiling(C)");
+
+        participantNo.setEditable(false);
+
+        javax.swing.GroupLayout AddASurveyLayout = new javax.swing.GroupLayout(AddASurvey.getContentPane());
+        AddASurvey.getContentPane().setLayout(AddASurveyLayout);
+        AddASurveyLayout.setHorizontalGroup(
+            AddASurveyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AddASurveyLayout.createSequentialGroup()
+                .addGroup(AddASurveyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(AddASurveyLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(AddASurveyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(AddASurveyLayout.createSequentialGroup()
+                                .addComponent(isFed)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(isState)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(isPrivate)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(isSelf)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(isUnemployed))
+                            .addGroup(AddASurveyLayout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(18, 18, 18)
+                                .addComponent(participantNo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(AddASurveyLayout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(18, 18, 18)
+                                .addComponent(zipCode, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9)
+                            .addGroup(AddASurveyLayout.createSequentialGroup()
+                                .addComponent(affectYes)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(affectNo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(affectUnknown))
+                            .addComponent(jLabel10)))
+                    .addGroup(AddASurveyLayout.createSequentialGroup()
+                        .addGap(105, 105, 105)
+                        .addComponent(submitAddASurvey)
+                        .addGap(133, 133, 133)
+                        .addComponent(cancelAddASurvey))
+                    .addGroup(AddASurveyLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(blameR)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(blameD)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(blameO)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(blameC)))
+                .addContainerGap())
+        );
+        AddASurveyLayout.setVerticalGroup(
+            AddASurveyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AddASurveyLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(AddASurveyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(participantNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(AddASurveyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(zipCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(AddASurveyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(isFed)
+                    .addComponent(isState)
+                    .addComponent(isPrivate)
+                    .addComponent(isSelf)
+                    .addComponent(isUnemployed))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(AddASurveyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(affectYes)
+                    .addComponent(affectNo)
+                    .addComponent(affectUnknown))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(AddASurveyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(blameR)
+                    .addComponent(blameD)
+                    .addComponent(blameO)
+                    .addComponent(blameC))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(AddASurveyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(submitAddASurvey)
+                    .addComponent(cancelAddASurvey)))
+        );
+
+        AddASurvey.getAccessibleContext().setAccessibleParent(null);
+        pack();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Survey On The Government Shutdown");
+
+        jLabel1.setText("Participant No.");
+
+        jLabel2.setText("Zip Code");
+
+        jLabel3.setText("Employment");
+
+        jLabel4.setText("Impact");
+
+        jLabel5.setText("Cause");
+
+        addASurvey.setText("Add");
+        addASurvey.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CSampleAddASurveyClicked(evt);
+            }
+        });
+
+        modifyASurvey.setText("Modify");
+        modifyASurvey.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modifyASurveyActionPerformed(evt);
+            }
+        });
+
+        removeASurvey.setText("Remove");
+        removeASurvey.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeASurveyActionPerformed(evt);
+            }
+        });
+
+        removeAllSurveys.setText("Remove All");
+        removeAllSurveys.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeAllSurveysActionPerformed(evt);
+            }
+        });
+
+        surveyListOut.setModel(surveyList);
+        surveyListOut.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        surveyListOut.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        surveyListOut.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                surveyListOutValueChanged(evt);
+            }
+        });
+        jScrollPane1.setViewportView(surveyListOut);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(addASurvey, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(modifyASurvey, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(removeASurvey, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(removeAllSurveys, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jLabel1)
+                .addGap(35, 35, 35)
+                .addComponent(jLabel2)
+                .addGap(31, 31, 31)
+                .addComponent(jLabel3)
+                .addGap(44, 44, 44)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addGap(26, 26, 26))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addASurvey)
+                    .addComponent(removeASurvey)
+                    .addComponent(modifyASurvey)
+                    .addComponent(removeAllSurveys))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>
+    
+    private void initComponents(CSample sample) {
+
+        AddASurvey = new javax.swing.JDialog();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        isFed = new javax.swing.JRadioButton("Federal",sample.isIsFederal());
+        isState = new javax.swing.JRadioButton("State/Local",sample.isIsState());
+        isPrivate = new javax.swing.JRadioButton("Private",sample.isIsPrivate());
+        isSelf = new javax.swing.JRadioButton("Self-Employed",sample.isIsSelf());
+        isUnemployed = new javax.swing.JRadioButton("Unemployed",sample.isIsUnemployed());
+        jLabel9 = new javax.swing.JLabel();
+        affectYes = new javax.swing.JRadioButton("Yes",sample.isImpYes());
+        affectNo = new javax.swing.JRadioButton("No",sample.isImpNo());
+        affectUnknown = new javax.swing.JRadioButton("Unknown",sample.isImpUnknown());
+        jLabel10 = new javax.swing.JLabel();
+        submitAddASurvey = new javax.swing.JButton();
+        cancelAddASurvey = new javax.swing.JButton();
+        zipCode = new javax.swing.JTextField(sample.getZip());
+        blameR = new javax.swing.JCheckBox("Republicans(R)",sample.isBlameR());
+        blameD = new javax.swing.JCheckBox("Democrats(D)",sample.isBlameD());
+        blameO = new javax.swing.JCheckBox("Obamacare(O)",sample.isBlameO());
+        blameC = new javax.swing.JCheckBox("The Debt Ceiling(C)",sample.isBlameC());
+        participantNo = new javax.swing.JTextField(sample.getId());
+        employmentType = new javax.swing.ButtonGroup();
+        affectType = new javax.swing.ButtonGroup();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        addASurvey = new javax.swing.JButton();
+        modifyASurvey = new javax.swing.JButton();
+        removeASurvey = new javax.swing.JButton();
+        removeAllSurveys = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        surveyListOut = new javax.swing.JList();
+
+        AddASurvey.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        AddASurvey.setTitle("Add A Survey");
+        AddASurvey.setMinimumSize(new java.awt.Dimension(552, 250));
+        AddASurvey.setPreferredSize(new java.awt.Dimension(552, 250));
+
+        jLabel6.setText("Participant No.");
+
+        jLabel7.setText("Zip Code");
+
+        jLabel8.setText("Employment Type");
+
+        employmentType.add(isFed);
+
+        employmentType.add(isState);
+
+        employmentType.add(isPrivate);
+
+        employmentType.add(isSelf);
+
+        employmentType.add(isUnemployed);
+
+        jLabel9.setText("Does the government shutown affect you?");
+
+        affectType.add(affectYes);
+
+        affectType.add(affectNo);
+
+        affectType.add(affectUnknown);
+
+        jLabel10.setText("Who/what is to blame for the government shutdown?");
+
+        submitAddASurvey.setText("Submit");
+        submitAddASurvey.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitAddASurveyActionPerformed(evt);
+            }
+        });
+
+        cancelAddASurvey.setText("Cancel");
+        cancelAddASurvey.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelAddASurveyActionPerformed(evt);
+            }
+        });
+
+        participantNo.setEditable(false);
+
+        javax.swing.GroupLayout AddASurveyLayout = new javax.swing.GroupLayout(AddASurvey.getContentPane());
+        AddASurvey.getContentPane().setLayout(AddASurveyLayout);
+        AddASurveyLayout.setHorizontalGroup(
+            AddASurveyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AddASurveyLayout.createSequentialGroup()
+                .addGroup(AddASurveyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(AddASurveyLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(AddASurveyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(AddASurveyLayout.createSequentialGroup()
+                                .addComponent(isFed)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(isState)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(isPrivate)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(isSelf)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(isUnemployed))
+                            .addGroup(AddASurveyLayout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(18, 18, 18)
+                                .addComponent(participantNo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(AddASurveyLayout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(18, 18, 18)
+                                .addComponent(zipCode, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9)
+                            .addGroup(AddASurveyLayout.createSequentialGroup()
+                                .addComponent(affectYes)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(affectNo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(affectUnknown))
+                            .addComponent(jLabel10)))
+                    .addGroup(AddASurveyLayout.createSequentialGroup()
+                        .addGap(105, 105, 105)
+                        .addComponent(submitAddASurvey)
+                        .addGap(133, 133, 133)
+                        .addComponent(cancelAddASurvey))
+                    .addGroup(AddASurveyLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(blameR)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(blameD)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(blameO)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(blameC)))
+                .addContainerGap())
+        );
+        AddASurveyLayout.setVerticalGroup(
+            AddASurveyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AddASurveyLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(AddASurveyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(participantNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(AddASurveyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(zipCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(AddASurveyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(isFed)
+                    .addComponent(isState)
+                    .addComponent(isPrivate)
+                    .addComponent(isSelf)
+                    .addComponent(isUnemployed))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(AddASurveyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(affectYes)
+                    .addComponent(affectNo)
+                    .addComponent(affectUnknown))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(AddASurveyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(blameR)
+                    .addComponent(blameD)
+                    .addComponent(blameO)
+                    .addComponent(blameC))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(AddASurveyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(submitAddASurvey)
+                    .addComponent(cancelAddASurvey)))
+        );
+
+        AddASurvey.getAccessibleContext().setAccessibleParent(null);
+        pack();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Survey On The Government Shutdown");
+
+        jLabel1.setText("Participant No.");
+
+        jLabel2.setText("Zip Code");
+
+        jLabel3.setText("Employment");
+
+        jLabel4.setText("Impact");
+
+        jLabel5.setText("Cause");
+
+        addASurvey.setText("Add");
+        addASurvey.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CSampleAddASurveyClicked(evt);
+            }
+        });
+
+        modifyASurvey.setText("Modify");
+        modifyASurvey.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modifyASurveyActionPerformed(evt);
+            }
+        });
+
+        removeASurvey.setText("Remove");
+        removeASurvey.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeASurveyActionPerformed(evt);
+            }
+        });
+
+        removeAllSurveys.setText("Remove All");
+        removeAllSurveys.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeAllSurveysActionPerformed(evt);
+            }
+        });
+
+        surveyListOut.setModel(surveyList);
+        surveyListOut.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        surveyListOut.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        surveyListOut.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                surveyListOutValueChanged(evt);
+            }
+        });
+        jScrollPane1.setViewportView(surveyListOut);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(addASurvey, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(modifyASurvey, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(removeASurvey, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(removeAllSurveys, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jLabel1)
+                .addGap(35, 35, 35)
+                .addComponent(jLabel2)
+                .addGap(31, 31, 31)
+                .addComponent(jLabel3)
+                .addGap(44, 44, 44)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addGap(26, 26, 26))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addASurvey)
+                    .addComponent(removeASurvey)
+                    .addComponent(modifyASurvey)
+                    .addComponent(removeAllSurveys))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>
+
+    //Handler Code
+    private void CSampleAddASurveyClicked(java.awt.event.ActionEvent evt) {                                          
+        isModifyInstance = false;
+        participantNo.setText(keyGen.generateId());
+        AddASurvey.setVisible(true);
+    }                                         
+
+    private void modifyASurveyActionPerformed(java.awt.event.ActionEvent evt) {                                              
+        //System.out.println(selectedItem); 
+        isModifyInstance = true;
+        modSurvey = surveyObjects.get(selectedItem);
+        participantNo.setText(modSurvey.getId());
+        initComponents(modSurvey);
+        AddASurvey.setVisible(true);
+        //initComponents();
+    }                                             
+
+    private void submitAddASurveyActionPerformed(java.awt.event.ActionEvent evt) {                                                 
+        if (isModifyInstance == false){
+            nuSurvey = new CSample(participantNo.getText(),zipCode.getText(),isFed.isSelected(),isState.isSelected(),isPrivate.isSelected(),isSelf.isSelected(),isUnemployed.isSelected(),
+            affectYes.isSelected(),affectNo.isSelected(),affectUnknown.isSelected(),blameR.isSelected(),blameD.isSelected(),blameO.isSelected(),blameC.isSelected());
+            surveyList.add(nuSurvey.getID()-1,nuSurvey.getString());
+            //debugging
+            //System.out.println(surveyListOut);
+            //System.out.println(surveyListOut.getModel());
+            surveyObjects.put(nuSurvey.getID()-1, nuSurvey);
+            AddASurvey.dispose();
+            //because Java's garbage collection logic is absolute fucking shit.  
+            initComponents();
+        } else {
+            nuSurvey = new CSample(participantNo.getText(),zipCode.getText(),isFed.isSelected(),isState.isSelected(),isPrivate.isSelected(),isSelf.isSelected(),isUnemployed.isSelected(),
+            affectYes.isSelected(),affectNo.isSelected(),affectUnknown.isSelected(),blameR.isSelected(),blameD.isSelected(),blameO.isSelected(),blameC.isSelected());
+            surveyList.set(nuSurvey.getID()-1,nuSurvey.getString());
+            surveyObjects.put(nuSurvey.getID()-1, nuSurvey);
+            AddASurvey.dispose();
+            initComponents();
+        }
+        
+    }                                                
+
+    private void cancelAddASurveyActionPerformed(java.awt.event.ActionEvent evt) {                                                 
+        AddASurvey.dispose();
+        if(isModifyInstance == true){
+            initComponents();
+            isModifyInstance = false;
+        } else {
+            keyGen.decrementID();
+            initComponents();
+        }
+    }                                                
+
+    private void surveyListOutValueChanged(javax.swing.event.ListSelectionEvent evt) {                                           
+        selectedItem = ((JList) evt.getSource()).getSelectedIndex();
+        //System.out.println(surveyListOut.getModel());
+        //System.out.println(selected);
+    }                                          
+
+    private void removeAllSurveysActionPerformed(java.awt.event.ActionEvent evt) {                                                 
+        surveyList.clear();
+        surveyListOut.clearSelection();
+        surveyListOut.repaint();
+        initComponents();
+    }                                                
+
+    private void removeASurveyActionPerformed(java.awt.event.ActionEvent evt) {                                              
+        surveyObjects.remove(selectedItem);
+        surveyList.remove(selectedItem);
+    }                                             
+
+    //Utility Methods
+    
+    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(CSampler.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(CSampler.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(CSampler.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(CSampler.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new CSampler().setVisible(true);
+            }
+        });
+    }
+    
+    protected boolean isModifyInstance;
+    protected CSample nuSurvey;
+    protected CSample modSurvey;
+    protected DefaultListModel surveyList;
+    private final HashMap<Integer,CSample> surveyObjects;
+    private int selectedItem;
+    final idGenerator keyGen;
+    // Variables declaration - do not modify                     
+    private javax.swing.JDialog AddASurvey;
+    private javax.swing.JButton addASurvey;
+    private javax.swing.JRadioButton affectNo;
+    private javax.swing.ButtonGroup affectType;
+    private javax.swing.JRadioButton affectUnknown;
+    private javax.swing.JRadioButton affectYes;
+    private javax.swing.JCheckBox blameC;
+    private javax.swing.JCheckBox blameD;
+    private javax.swing.JCheckBox blameO;
+    private javax.swing.JCheckBox blameR;
+    private javax.swing.JButton cancelAddASurvey;
+    private javax.swing.ButtonGroup employmentType;
+    private javax.swing.JRadioButton isFed;
+    private javax.swing.JRadioButton isPrivate;
+    private javax.swing.JRadioButton isSelf;
+    private javax.swing.JRadioButton isState;
+    private javax.swing.JRadioButton isUnemployed;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton modifyASurvey;
+    private javax.swing.JTextField participantNo;
+    private javax.swing.JButton removeASurvey;
+    private javax.swing.JButton removeAllSurveys;
+    private javax.swing.JButton submitAddASurvey;
+    private javax.swing.JList surveyListOut;
+    private javax.swing.JTextField zipCode;
+    // End of variables declaration                   
+}
+
+
+--------------------------------------------
+---------GUI COMPONENTS---------------------
+--------------------------------------------
+
+Handling:
+
+Source object (i.e. window) ---> Receiver Object[H_Func(Event){}]
+			^							|
+		    |							v
+			----------Registration-------
+
+
+Source/receiver is the whole window, 
+You can put sources inside of a reciever (child windows inside parent window)
+
+
+jcheckbox/jradiobutton
+
+public JCheckBox(String (or int) text,
+         Icon icon,
+         boolean selected)
+
+jtextfield
+
+public JTextField(Document doc,
+          String text,
+          int columns)
+
+jtextarea
+
+public JTextArea(Document doc,
+         String text,
+         int rows,
+         int columns)
+
+jbutton
+
+public JButton(String text,
+               Icon icon)

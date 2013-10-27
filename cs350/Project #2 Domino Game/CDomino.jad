@@ -1,0 +1,184 @@
+// Decompiled by Jad v1.5.8e. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.geocities.com/kpdus/jad.html
+// Decompiler options: packimports(3) 
+// Source File Name:   CDomino.java
+
+import java.awt.Color;
+import java.awt.Graphics;
+
+public class CDomino
+{
+
+    public CDomino(int x, int y, int w, int numSpots1, int numSpots2)
+    {
+        int spot_matrix[][][] = {
+            {
+                new int[3], new int[3], new int[3]
+            }, {
+                new int[3], {
+                    0, 1, 0
+                }, new int[3]
+            }, {
+                {
+                    1, 0, 0
+                }, new int[3], {
+                    0, 0, 1
+                }
+            }, {
+                {
+                    1, 0, 0
+                }, {
+                    0, 1, 0
+                }, {
+                    0, 0, 1
+                }
+            }, {
+                {
+                    1, 0, 1
+                }, new int[3], {
+                    1, 0, 1
+                }
+            }, {
+                {
+                    1, 0, 1
+                }, {
+                    0, 1, 0
+                }, {
+                    1, 0, 1
+                }
+            }, {
+                {
+                    1, 0, 1
+                }, {
+                    1, 0, 1
+                }, {
+                    1, 0, 1
+                }
+            }
+        };
+        X1 = x;
+        Y1 = y;
+        X2 = x + w;
+        Y2 = y + 2 * w;
+        R = 3;
+        numSpots = numSpots1 + numSpots2;
+        Xs = new int[numSpots];
+        Ys = new int[numSpots];
+        int index = 0;
+        int bw = 6;
+        int delta = (w - 2 * bw) / 2;
+        for(int j = 0; j < 3; j++)
+        {
+            for(int k = 0; k < 3; k++)
+                if(spot_matrix[numSpots1][j][k] == 1)
+                {
+                    Xs[index] = x + bw + k * delta;
+                    Ys[index] = y + bw + j * delta;
+                    index++;
+                }
+
+        }
+
+        for(int j = 0; j < 3; j++)
+        {
+            for(int k = 0; k < 3; k++)
+                if(spot_matrix[numSpots2][j][k] == 1)
+                {
+                    Xs[index] = x + bw + k * delta;
+                    Ys[index] = y + w + bw + j * delta;
+                    index++;
+                }
+
+        }
+
+        borderColor = Color.blue;
+        backColor = Color.lightGray;
+        foreColor = Color.red;
+    }
+
+    public int getCneterX()
+    {
+        return (X1 + X2) / 2;
+    }
+
+    public int getCneterY()
+    {
+        return (Y1 + Y2) / 2;
+    }
+
+    public boolean isInside(int x, int y)
+    {
+        return x >= X1 && x < X2 && y >= Y1 && y < Y2;
+    }
+
+    public void translate(int dx, int dy)
+    {
+        X1 += dx;
+        Y1 += dy;
+        X2 += dx;
+        Y2 += dy;
+        for(int i = 0; i < numSpots; i++)
+        {
+            Xs[i] += dx;
+            Ys[i] += dy;
+        }
+
+    }
+
+    public void rotate(int xp, int yp)
+    {
+        int tmp_x = xp + (Y1 - yp);
+        Y1 = yp - (X1 - xp);
+        X1 = tmp_x;
+        tmp_x = xp + (Y2 - yp);
+        Y2 = yp - (X2 - xp);
+        X2 = tmp_x;
+        if(X1 > X2)
+        {
+            int larger = X1;
+            X1 = X2;
+            X2 = larger;
+        }
+        if(Y1 > Y2)
+        {
+            int larger = Y1;
+            Y1 = Y2;
+            Y2 = larger;
+        }
+        for(int i = 0; i < numSpots; i++)
+        {
+            tmp_x = xp + (Ys[i] - yp);
+            Ys[i] = yp - (Xs[i] - xp);
+            Xs[i] = tmp_x;
+        }
+
+    }
+
+    public void draw(Graphics g)
+    {
+        g.setColor(backColor);
+        g.fillRect(X1, Y1, X2 - X1, Y2 - Y1);
+        g.setColor(foreColor);
+        for(int i = 0; i < numSpots; i++)
+            g.fillOval(Xs[i] - R, Ys[i] - R, 2 * R + 1, 2 * R + 1);
+
+        if(Y2 - Y1 > X2 - X1)
+            g.drawLine(X1, (Y1 + Y2) / 2, X2, (Y1 + Y2) / 2);
+        else
+            g.drawLine((X1 + X2) / 2, Y1, (X1 + X2) / 2, Y2);
+        g.setColor(borderColor);
+        g.drawRect(X1, Y1, X2 - X1, Y2 - Y1);
+    }
+
+    private int X1;
+    private int Y1;
+    private int X2;
+    private int Y2;
+    private int R;
+    private int numSpots;
+    private int Xs[];
+    private int Ys[];
+    private Color borderColor;
+    private Color backColor;
+    private Color foreColor;
+}

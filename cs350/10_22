@@ -1,0 +1,54 @@
+File Systems
+-----
+Files and directories
+-----
+Absolute names (/root/usr/dave/home/work/thing.txt)
+Relative names (thing.txt)
+Text and binary files
+	All files are binary files
+	Text files are a subset that can be printed out.
+Sequential-access and random-access files
+	Sequential-access is like a cassette tape, have to go through all of it to get to a point
+	Random access is like a cd, you can skip to different points
+
+File in Java
+-----
+File file = new File(name)
+boolean exists()
+String getAbsolutePath()
+boolean isFile()
+boolean isDirectory()
+String.getParent()
+String[] list()
+boolean canRead()
+boolean canWrite
+
+Sequential-access Text File in Java
+-----
+Formatter output = new Formatter (name);
+output.format(...);		//like printf in C...prints into a file.
+output.close()
+
+Scanner input=new scanner(new File(name));
+input.hasNext()
+input.next(), input.nextInt(), input.nextDouble()
+Input.close()
+
+Object Serialization in Java
+-----
+Class MyObject implements java.io.Serializable{}
+//tagging interface
+ObjectOutputStream output = new
+ObjectOutputStream(new FileOutputSream(name))
+output.writeDouble(4.0);
+output.writeObject(obj); // MyObject obj;
+output.close;
+
+ObectInputStream input = new ObjectInpitStream(newFileInputStream(name));
+Doubke gpa=input.readDouble();
+MyObject obj {MyObjcet} input.readObject();
+input.close();
+
+Common File Dialog Box
+-----
+JFileChooser
